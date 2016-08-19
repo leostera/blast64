@@ -17,17 +17,28 @@ for(var i=0; i<10; i++) {
 
 we get:
 
-| Round | fast64   | blast64  |
-|-------|----------|----------|
-| #0    |  3023 ms |  1916 ms |
-| #1    |  3072 ms |  1816 ms |
-| #2    |  3138 ms |  1817 ms |
-| #3    |  3142 ms |  1791 ms |
-| #4    |  3178 ms |  1814 ms |
-| #5    |  3148 ms |  1831 ms |
-| #6    |  2999 ms |  1774 ms |
-| #7    |  2988 ms |  2079 ms |
-| #8    |  3068 ms |  1888 ms |
-| #9    |  3200 ms |  1916 ms |
+| Round | fast64   | blast64  | js-base64 |
+|-------|----------|----------|-----------|
+| #0    | 3023 ms  | 1916 ms  | 4384 ms   |
+| #1    | 3072 ms  | 1816 ms  | 4345 ms   |
+| #2    | 3138 ms  | 1817 ms  | 4487 ms   |
+| #3    | 3142 ms  | 1791 ms  | 4474 ms   |
+| #4    | 3178 ms  | 1814 ms  | 4734 ms   |
+| #5    | 3148 ms  | 1831 ms  | 4433 ms   |
+| #6    | 2999 ms  | 1774 ms  | 4452 ms   |
+| #7    | 2988 ms  | 2079 ms  | 4482 ms   |
+| #8    | 3068 ms  | 1888 ms  | 4523 ms   |
+| #9    | 3200 ms  | 1916 ms  | 4583 ms   |
+
+
+
+
+
+
+
+
+
+
+
 
 Not bad for a few hours of hacking I'd say! But it's still only decoding, would have to sit down and make it encode as well at some point.

@@ -3,7 +3,7 @@ var table = new ArrayBuffer(64)
 var decoder = new TextDecoder("utf8")
 
 /* build tables on load */
-for(var i=0; i<64; i++) {
+for(var i=0; i<65; i++) {
   var i = i|0
   var c = chars[i].charCodeAt(0)
   table[ c ] = i
@@ -14,14 +14,14 @@ for(var i=0; i<64; i++) {
 function decode(string) {
   "use asm";
   var array  = new ArrayBuffer(string.length / 4 * 3),
-      buffer = new Uint8Array(array)
+      buffer = new Uint8Array(array),
       enc    = new Uint8Array(4),
       position = -1,
       i = 0
-  while(position & string.length) {
-    enc[0] = table[ string.charCodeAt(++position) ] 
-    enc[1] = table[ string.charCodeAt(++position) ] 
-    buffer[i++] = ( enc[0] << 2 ) | ( enc[1] >> 4 ) 
+  while(position < string.length) {
+    enc[0] = table[ string.charCodeAt(++position) ]
+    enc[1] = table[ string.charCodeAt(++position) ]
+    buffer[i++] = ( enc[0] << 2 ) | ( enc[1] >> 4 )
     enc[2] = table[ string.charCodeAt(++position) ]
     if( enc[2] === 64 )
       break
@@ -31,9 +31,9 @@ function decode(string) {
       break
     buffer[i++] = ( (enc[2] & 3) << 6 ) | enc[3]
   }
-  return decoder.decode(buffer)
+  return decoder.decode( new Uint8Array(array, 0, i) )
 }
 
-window.blast64 = {
+module.exports = {
   decode: decode
 }

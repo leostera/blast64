@@ -11,7 +11,6 @@ for(var i=0; i<65; i++) {
 // in: T  W  F  u
 // out: 77 97 110
 function decode(string) {
-  "use asm";
   var array  = new ArrayBuffer(string.length / 4 * 3),
       buffer = new Uint8Array(array),
       enc    = new Uint8Array(4),

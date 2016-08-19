@@ -4,7 +4,6 @@ var decoder = new TextDecoder("utf8")
 
 /* build tables on load */
 for(var i=0; i<65; i++) {
-  var i = i|0
   var c = chars[i].charCodeAt(0)
   table[ c ] = i
 }
@@ -23,11 +22,11 @@ function decode(string) {
     enc[1] = table[ string.charCodeAt(++position) ]
     buffer[i++] = ( enc[0] << 2 ) | ( enc[1] >> 4 )
     enc[2] = table[ string.charCodeAt(++position) ]
-    if( enc[2] === 64 )
+    if( enc[2] & 64 )
       break
     buffer[i++] = ( (enc[1] & 15) << 4) | ( enc[2] >> 2 )
     enc[3] = table[ string.charCodeAt(++position) ]
-    if( enc[3] === 64 )
+    if( enc[3] & 64 )
       break
     buffer[i++] = ( (enc[2] & 3) << 6 ) | enc[3]
   }

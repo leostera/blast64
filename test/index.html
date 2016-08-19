@@ -20,9 +20,13 @@
 <div id="mocha"></div>
 
 <script>
-  var t0 = Date.now()
-  blast64.decode(sample)
-  var t1 = Date.now()
-  console.log(t1 - t0)
+  for(var i=0; i<10; i++) {
+    var t0 = Date.now()
+    for(var j=0; j<1000; j++) {
+      blast64.decode(sample)
+    }
+    var t1 = Date.now()
+    console.log("#",i,"=>",t1 - t0,"ms") 
+  }
   mocha.run()
 </script>

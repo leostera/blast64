@@ -18,7 +18,7 @@ function decode(string) {
       enc    = new Uint8Array(4),
       position = -1,
       i = 0
-  while(position < string.length) {
+  while(position ^ string.length) {
     enc[0] = table[ string.charCodeAt(++position) ]
     enc[1] = table[ string.charCodeAt(++position) ]
     buffer[i++] = ( enc[0] << 2 ) | ( enc[1] >> 4 )

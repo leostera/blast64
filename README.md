@@ -2,32 +2,22 @@
 
 What seems to be a base64 decoder that's faster than [superhuman/fast64](https://github.com/superhuman/fast64).
 
-From running on latest Chrome, 10 rounds of 1000 executions with [their sample HTML string](https://github.com/superhuman/fast64/blob/master/test/sample.js) using the following code:
+Benchmark runnable by serving `test/index.html`, and looking at the console output (is nice, I promise):
 
-```javascript
-for(var i=0; i<10; i++) {
-  var t0 = Date.now()
-  for(var j=0; j<1000; j++) {
-    decode(sample)
-  }
-  var t1 = Date.now()
-  console.log("#",i,"=>",t1 - t0,"ms")
-}
-```
 
-we get:
+#### Benchmark
 
-| Round | js-base64 | fast64   | btoa    | blast64  |
-|-------|-----------|----------|---------|----------|
-| #0    | 4384 ms   | 3023 ms  | 1915 ms | 1916 ms  |
-| #1    | 4345 ms   | 3072 ms  | 1888 ms | 1816 ms  |
-| #2    | 4487 ms   | 3138 ms  | 1922 ms | 1817 ms  |
-| #3    | 4474 ms   | 3142 ms  | 2144 ms | 1791 ms  |
-| #4    | 4734 ms   | 3178 ms  | 1835 ms | 1814 ms  |
-| #5    | 4433 ms   | 3148 ms  | 1799 ms | 1831 ms  |
-| #6    | 4452 ms   | 2999 ms  | 1738 ms | 1774 ms  |
-| #7    | 4482 ms   | 2988 ms  | 1725 ms | 2079 ms  |
-| #8    | 4523 ms   | 3068 ms  | 1743 ms | 1888 ms  |
-| #9    | 4583 ms   | 3200 ms  | 1719 ms | 1916 ms  |
+This is the average time from encoded string to UTF-8 encoded result.
+
+The 💓  was ran `10000000` times.
+
+The ~355kb payload was ran `1000` times.
+
+| Load   | js-base64  | fast64    | base64-js | blast64   | btoa*     |
+|--------|------------|-----------|-----------|-----------|-----------|
+| 💓      | 0.0025 ms  | 0.0031 ms | 0.0018 ms | 0.0010 ms | 0.0009 ms |
+| ~355kb | 4.5263 ms  | 2.9529 ms | 1.7501 ms | 1.3920 ms | 1.0423 ms |
 
 Not bad for a few hours of hacking I'd say! But it's still only decoding, would have to sit down and make it encode as well at some point.
+
+* btoa has one big caveat explained here: [The Unicode Problem](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem)

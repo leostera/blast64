@@ -20,13 +20,19 @@
 <div id="mocha"></div>
 
 <script>
-  for(var i=0; i<10; i++) {
-    var t0 = Date.now()
-    for(var j=0; j<1000; j++) {
-      blast64.decode(sample)
-    }
-    var t1 = Date.now()
-    console.log("#",i,"=>",t1 - t0,"ms") 
-  }
   mocha.run()
+  var bench = function(name, string) {
+    console.log("Sample String:")
+    for(var i=0; i<10; i++) {
+      var t0 = Date.now()
+      for(var j=0; j<1000; j++) {
+        blast64.decode(string)
+      }
+      var t1 = Date.now()
+      console.log("#",i,"=>",t1 - t0,"ms")
+    }
+  }
+  //bench("Short string", "8J+Skw==", 1000)
+  bench("Sample string", sample, 1000)
+  //bench("25x Sample string", (new Array(25)).fill(sample).join(""), 100)
 </script>

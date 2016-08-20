@@ -21,25 +21,25 @@ function decode(string) {
 }
 
 function _base64_decode(string, length, array) {
+  length = length | 0
   var buffer = new Uint8Array(array),
       tmp = 0,
       position = -1,
-      i = 0
-
-  var placeholders = '=' === string.charAt(length - 2) ? 2 :
-                     '=' === string.charAt(length - 1) ? 1 : 0
-  length = placeholders > 0 ? length-4 : length
+      i = 0,
+      pad1 = 0,
+      pad2 = 0
 
   while(position^length) {
     tmp = ((table[string.charCodeAt(++position)]) << 18)
         | ((table[string.charCodeAt(++position)]) << 12)
-        | ((table[string.charCodeAt(++position)]) << 6)
-        | ((table[string.charCodeAt(++position)]) )
+        | ((pad1=table[string.charCodeAt(++position)]) << 6)
+        | ((pad2=table[string.charCodeAt(++position)]) )
     buffer[i++] = (tmp >> 16)
+    if(!(pad1^64)) break
     buffer[i++] = (tmp >> 8)
+    if(!(pad2^64)) break
+    buffer[i++] = tmp
     if(position>length) break
-    buffer[i++] = tmp & 0xFF
-    console.log(string, length, position, buffer)
   }
 
   return i

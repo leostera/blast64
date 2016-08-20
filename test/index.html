@@ -15,7 +15,6 @@
   expect = chai.expect;
 </script>
 <script src="sample.js"></script>
-<script src="bible.js"></script>
 <script src="test.js"></script>
 
 <div id="mocha"></div>
@@ -30,7 +29,7 @@
   }
 
   var bench = function(name, subject, data, iterations) {
-    console.log("== bench:", name, "(x"+iterations+", len: "+data.length+")")
+    console.group("Bench:", name, "(x"+iterations+", len: "+data.length+")")
     var deltas = []
     for(var i=0; i<iterations; i++) {
       deltas.push(clock(function () {
@@ -49,18 +48,19 @@
       return a > b ? a : b
     }, deltas[0])
 
-    console.log("Min", min)
-    console.log("Max", max)
+    console.log("Min", min, "ms")
+    console.log("Max", max, "ms")
     console.log("Count", count)
-    console.log("Average", average)
+    console.log("Average", average, "ms")
+    console.groupEnd()
   }
 
   var bench_suite = function(subject) {
-    console.log("= Suite:", subject.toString().split(" ")[1])
-    bench("Short string", subject, "8J+Skw==", 100000)
-    bench("Sample string", subject, sample, 10000)
+    console.group("Suite:", subject.toString().split(" ")[1])
+    bench("Short string", subject, "8J+Skw==", 10000000)
+    bench("Sample string", subject, sample, 1000)
+    console.groupEnd()
   }
 
   bench_suite(Base64.decode)
 </script>
-

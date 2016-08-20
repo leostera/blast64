@@ -20,7 +20,7 @@
 <div id="mocha"></div>
 
 <script>
-  mocha.run()
+  //mocha.run()
   var clock = function(f) {
     var t0 = performance.now()
     f()
@@ -28,12 +28,12 @@
     return t1 - t0
   }
 
-  var bench = function(name, string, iterations) {
-    console.log("== bench:", name, "(x"+iterations+", len: "+string.length+")")
+  var bench = function(name, subject, data, iterations) {
+    console.log("== bench:", name, "(x"+iterations+", len: "+data.length+")")
     var deltas = []
     for(var i=0; i<iterations; i++) {
       deltas.push(clock(function () {
-        blast64.decode(string)
+        subject(data)
       }))
     }
     var count = deltas.reduce(function(acc, el) {
@@ -54,8 +54,14 @@
     console.log("Average", average)
   }
 
-  bench("Short string", "8J+Skw==", 100000)
-  bench("Sample string", sample, 10000)
-  bench("25x Sample string", (new Array(25)).fill(sample).join(""), 1000)
-  bench("50x Sample string", (new Array(50)).fill(sample).join(""), 1000)
+  var bench_suite = function(subject) {
+    console.log("= Suite:", subject.toString().split(" ")[1])
+    bench("Short string", subject, "8J+Skw==", 100000)
+    bench("Sample string", subject, sample, 10000)
+    bench("25x Sample string", subject, (new Array(25)).fill(sample_2).join(""), 1000)
+    bench("50x Sample string", subject, (new Array(50)).fill(sample_2).join(""), 1000)
+  }
+
+  bench_suite(blast64.decode)
+
 </script>

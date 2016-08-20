@@ -17,28 +17,17 @@ for(var i=0; i<10; i++) {
 
 we get:
 
-| Round | js-base64 | fast64   | blast64  |
-|-------|-----------|----------|----------|
-| #0    | 4384 ms   | 3023 ms  | 1916 ms  |
-| #1    | 4345 ms   | 3072 ms  | 1816 ms  |
-| #2    | 4487 ms   | 3138 ms  | 1817 ms  |
-| #3    | 4474 ms   | 3142 ms  | 1791 ms  |
-| #4    | 4734 ms   | 3178 ms  | 1814 ms  |
-| #5    | 4433 ms   | 3148 ms  | 1831 ms  |
-| #6    | 4452 ms   | 2999 ms  | 1774 ms  |
-| #7    | 4482 ms   | 2988 ms  | 2079 ms  |
-| #8    | 4523 ms   | 3068 ms  | 1888 ms  |
-| #9    | 4583 ms   | 3200 ms  | 1916 ms  |
-
-
-
-
-
-
-
-
-
-
-
+| Round | js-base64 | fast64   | btoa    | blast64  |
+|-------|-----------|----------|---------|----------|
+| #0    | 4384 ms   | 3023 ms  | 1915 ms | 1916 ms  |
+| #1    | 4345 ms   | 3072 ms  | 1888 ms | 1816 ms  |
+| #2    | 4487 ms   | 3138 ms  | 1922 ms | 1817 ms  |
+| #3    | 4474 ms   | 3142 ms  | 2144 ms | 1791 ms  |
+| #4    | 4734 ms   | 3178 ms  | 1835 ms | 1814 ms  |
+| #5    | 4433 ms   | 3148 ms  | 1799 ms | 1831 ms  |
+| #6    | 4452 ms   | 2999 ms  | 1738 ms | 1774 ms  |
+| #7    | 4482 ms   | 2988 ms  | 1725 ms | 2079 ms  |
+| #8    | 4523 ms   | 3068 ms  | 1743 ms | 1888 ms  |
+| #9    | 4583 ms   | 3200 ms  | 1719 ms | 1916 ms  |
 
 Not bad for a few hours of hacking I'd say! But it's still only decoding, would have to sit down and make it encode as well at some point.

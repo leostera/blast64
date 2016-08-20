@@ -8,20 +8,20 @@ for(var i=0; i<65; i++) {
   table[ c ] = i
 }
 
-// in: T  W  F  u
-// out: 77 97 110
+/* internal heap */
+var HEAP_SIZE = 1000000000
+var HEAP = new ArrayBuffer(HEAP_SIZE)
 function decode(string) {
-
+  return decoder.decode(decode_to_array(string))
 }
 
-function decode(string) {
-  var array = new ArrayBuffer((string.length) / 4 * 3)
-  var len   = _base64_decode(string, string.length, array)
-  return decoder.decode( new Uint8Array(array, 0, len) )
+function decode_to_array(string) {
+  var len = _base64_decode(string, string.length, HEAP)
+  return new Uint8Array(HEAP, 0, len)
 }
 
 function _base64_decode(string, length, array) {
-  length = length | 0
+  lenght = length | 0
   var buffer = new Uint8Array(array),
       tmp = 0,
       position = -1,
@@ -46,5 +46,6 @@ function _base64_decode(string, length, array) {
 }
 
 module.exports = {
-  decode: decode
+  decode: decode,
+  decode_to_array: decode_to_array
 }

@@ -23,14 +23,20 @@
   mocha.run()
   var bench = function(name, string) {
     console.log("Sample String:")
+    var deltas = []
     for(var i=0; i<10; i++) {
       var t0 = Date.now()
       for(var j=0; j<1000; j++) {
         blast64.decode(string)
       }
       var t1 = Date.now()
-      console.log("#",i,"=>",t1 - t0,"ms")
+      var d  = t1 - t0
+      deltas.push(d)
+      console.log("#",i,"=>",d,"ms")
     }
+    console.log("Average",
+                deltas.reduce(function(a,b) { return a+b }, 0)/deltas.length
+                )
   }
   //bench("Short string", "8J+Skw==", 1000)
   bench("Sample string", sample, 1000)

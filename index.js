@@ -16,8 +16,14 @@ function decode(string) {
 
 function decode(string) {
   var array = new ArrayBuffer((string.length) / 4 * 3)
-  var len   = _base64_decode(string, string.length, array)
+  var len   = _base64_decode(to_charcodes(string), string.length, array)
   return decoder.decode( new Uint8Array(array, 0, len) )
+}
+
+function to_charcodes(string) {
+  return string.split("").map(function(i) {
+    return i.charCodeAt(0)
+  })
 }
 
 function _base64_decode(string, length, array) {
@@ -30,10 +36,10 @@ function _base64_decode(string, length, array) {
       pad2 = 0
 
   while(position^length) {
-    tmp = ((table[string.charCodeAt(++position)]) << 18)
-        | ((table[string.charCodeAt(++position)]) << 12)
-        | ((pad1=table[string.charCodeAt(++position)]) << 6)
-        | ((pad2=table[string.charCodeAt(++position)]) )
+    tmp = ((table[string[++position]]) << 18)
+        | ((table[string[++position]]) << 12)
+        | ((pad1=table[string[++position]]) << 6)
+        | ((pad2=table[string[++position]]) )
     buffer[i++] = (tmp >> 16)
     if(!(pad1^64)) break
     buffer[i++] = (tmp >> 8)

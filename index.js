@@ -8,30 +8,44 @@ for(var i=0; i<65; i++) {
   table[ c ] = i
 }
 
-// in: T  W  F  u
-// out: 77 97 110
+/* internal heap */
+var HEAP_SIZE = 1000000000
+var HEAP = new ArrayBuffer(HEAP_SIZE)
 function decode(string) {
-  var array  = new ArrayBuffer(string.length / 4 * 3),
-      buffer = new Uint8Array(array),
-      enc    = new Uint8Array(4),
+  return decoder.decode(decode_to_array(string))
+}
+
+function decode_to_array(string) {
+  var len = _base64_decode(string, string.length, HEAP)
+  return new Uint8Array(HEAP, 0, len)
+}
+
+function _base64_decode(string, length, array) {
+  lenght = length | 0
+  var buffer = new Uint8Array(array),
+      tmp = 0,
       position = -1,
-      i = 0
-  while(position ^ string.length) {
-    enc[0] = table[ string.charCodeAt(++position) ]
-    enc[1] = table[ string.charCodeAt(++position) ]
-    buffer[i++] = ( enc[0] << 2 ) | ( enc[1] >> 4 )
-    enc[2] = table[ string.charCodeAt(++position) ]
-    if( enc[2] & 64 )
-      break
-    buffer[i++] = ( (enc[1] & 15) << 4) | ( enc[2] >> 2 )
-    enc[3] = table[ string.charCodeAt(++position) ]
-    if( enc[3] & 64 )
-      break
-    buffer[i++] = ( (enc[2] & 3) << 6 ) | enc[3]
+      i = 0,
+      pad1 = 0,
+      pad2 = 0
+
+  while(position^length) {
+    tmp = ((table[string.charCodeAt(++position)]) << 18)
+        | ((table[string.charCodeAt(++position)]) << 12)
+        | ((pad1=table[string.charCodeAt(++position)]) << 6)
+        | ((pad2=table[string.charCodeAt(++position)]) )
+    buffer[i++] = (tmp >> 16)
+    if(!(pad1^64)) break
+    buffer[i++] = (tmp >> 8)
+    if(!(pad2^64)) break
+    buffer[i++] = tmp
+    if(position>length) break
   }
-  return decoder.decode( new Uint8Array(array, 0, i) )
+
+  return i
 }
 
 module.exports = {
-  decode: decode
+  decode: decode,
+  decode_to_array: decode_to_array
 }

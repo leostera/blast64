@@ -9,7 +9,7 @@
 </script>
 <script src="../index.js"></script>
 <script>
-  blast64 = Base64 = module.exports;
+  Base64 = module.exports;
 
   mocha.setup({ignoreLeaks: true, ui: "bdd"});
   expect = chai.expect;
@@ -20,13 +20,47 @@
 <div id="mocha"></div>
 
 <script>
-  for(var i=0; i<10; i++) {
-    var t0 = Date.now()
-    for(var j=0; j<1000; j++) {
-      blast64.decode(sample)
-    }
-    var t1 = Date.now()
-    console.log("#",i,"=>",t1 - t0,"ms") 
-  }
   mocha.run()
+  var clock = function(f) {
+    var t0 = performance.now()
+    f()
+    var t1 = performance.now()
+    return t1 - t0
+  }
+
+  var bench = function(name, subject, data, iterations) {
+    console.group("Bench:", name, "(x"+iterations+", len: "+data.length+")")
+    var deltas = []
+    for(var i=0; i<iterations; i++) {
+      deltas.push(clock(function () {
+        subject(data)
+      }))
+    }
+    var count = deltas.reduce(function(acc, el) {
+      acc[el|0] = acc[el|0] === undefined ? 0 : acc[el|0]+1
+      return acc
+    }, {})
+    var average = deltas.reduce(function(a,b) { return a+b }, 0)/deltas.length
+    var min = deltas.reduce(function(a,b) {
+      return a < b ? a : b
+    }, deltas[0])
+    var max = deltas.reduce(function(a,b) {
+      return a > b ? a : b
+    }, deltas[0])
+
+    console.log("Min", min, "ms")
+    console.log("Max", max, "ms")
+    console.log("Count", count)
+    console.log("Average", average, "ms")
+    console.groupEnd()
+  }
+
+  var bench_suite = function(subject) {
+    console.group("Suite:", subject.toString().split(" ")[1])
+    bench("Short string", subject, "8J+Skw==", 10000000)
+    bench("Sample string", subject, sample, 1000)
+    console.groupEnd()
+  }
+
+  bench_suite(Base64.decode)
 </script>

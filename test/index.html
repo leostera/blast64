@@ -9,18 +9,19 @@
 </script>
 <script src="../index.js"></script>
 <script>
-  blast64 = Base64 = module.exports;
+  Base64 = module.exports;
 
   mocha.setup({ignoreLeaks: true, ui: "bdd"});
   expect = chai.expect;
 </script>
 <script src="sample.js"></script>
+<script src="bible.js"></script>
 <script src="test.js"></script>
 
 <div id="mocha"></div>
 
 <script>
-  //mocha.run()
+  mocha.run()
   var clock = function(f) {
     var t0 = performance.now()
     f()
@@ -58,10 +59,8 @@
     console.log("= Suite:", subject.toString().split(" ")[1])
     bench("Short string", subject, "8J+Skw==", 100000)
     bench("Sample string", subject, sample, 10000)
-    bench("25x Sample string", subject, (new Array(25)).fill(sample_2).join(""), 1000)
-    bench("50x Sample string", subject, (new Array(50)).fill(sample_2).join(""), 1000)
   }
 
-  bench_suite(blast64.decode)
-
+  bench_suite(Base64.decode)
 </script>
+

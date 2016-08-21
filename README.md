@@ -1,4 +1,4 @@
-# blast64
+# ⚡️ blast64
 
 What seems to be a base64 decoder that's faster than [superhuman/fast64](https://github.com/superhuman/fast64).
 

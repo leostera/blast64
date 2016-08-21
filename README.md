@@ -1,11 +1,25 @@
 # ⚡️ blast64
+> Apparently the fastest way of decoding Base64 in Chrome.
 
-What seems to be a base64 decoder that's faster than [superhuman/fast64](https://github.com/superhuman/fast64).
+## Installation
 
-Benchmark runnable by serving `test/index.html`, and looking at the console output (is nice, I promise):
+```
+npm install blast64
+```
 
+## Usage
 
-#### Benchmark
+```javascript
+var blast64 = require('blast64');
+
+// From base64 to UTF-8 string
+blast64.decode(base64string);
+
+// From base64 to Uint8Array
+blast64.decode_to_array(base64string);
+```
+
+## Testing and Benchmark
 
 This is the average time from encoded string to UTF-8 encoded result.
 

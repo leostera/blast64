@@ -1,11 +1,21 @@
 {
   "name": "blast64",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "repository": "https://github.com/ostera/blast64",
   "main": "index.js",
   "author": "Leandro Ostera <leandro@ostera.io>",
   "description":"An apparently even faster in-browser base64 decoder",
+  "keywords": [
+    "browser",
+    "chrome",
+    "chrome only",
+    "base conversion",
+    "base64",
+    "base64 decode",
+    "base64_decode",
+    "decode"
+  ],
   "devDependencies": {
     "chai": "^3.4.1",
     "mocha": "^2.3.4"

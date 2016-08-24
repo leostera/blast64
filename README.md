@@ -32,4 +32,11 @@ The ~355kb payload was ran `1000` times.
 | 💓      | 0.0019 ms        | 0.0025 ms  | 0.0031 ms | 0.0018 ms | 0.0010 ms |
 | ~355kb | 31.257 ms        | 4.5263 ms  | 2.9529 ms | 1.7501 ms | 1.3920 ms |
 
+And this are the average times without the `TextDecoder` step where relevant:
+
+| Load   | atob      | blast64.decode_to_array   |
+|--------|-----------|-----------|
+| 💓      | 0.0008 ms | 0.0005 ms |
+| ~355kb | 1.7580 ms | 1.0701 ms |
+
 Not bad for a few hours of hacking I'd say! But it's still only decoding, would have to sit down and make it encode as well at some point.

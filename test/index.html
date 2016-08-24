@@ -62,6 +62,11 @@
     console.groupEnd()
   }
 
+  // Benchmarks below
+
+  bench_suite(Base64.decode)
+
+  //atob + TextDecoder
   var decoder = new TextDecoder("utf8")
   var arr  = new ArrayBuffer(1000000000)
   var buff = new Uint8Array(arr)
@@ -77,4 +82,7 @@
     }
     return data.length
   }
+
+  bench_suite(Base64.decode_to_array)
+  bench_suite(atob)
 </script>

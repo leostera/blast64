@@ -34,9 +34,12 @@ The ~355kb payload was ran `1000` times.
 
 And this are the average times without the `TextDecoder` step where relevant:
 
-| Load   | atob      | blast64.decode_to_array   |
-|--------|-----------|-----------|
-| 💓      | 0.0008 ms | 0.0005 ms |
-| ~355kb | 1.7580 ms | 1.0701 ms |
+| Load   | fast64[0] | atob      | blast64.decode_to_array   |
+|--------|-----------|-----------|---------------------------|
+| 💓      | 0.0017 ms | 0.0008 ms | 0.0005 ms                 |
+| ~355kb | 2.5336 ms | 1.7580 ms | 1.0701 ms                 |
+
+[0] `fast64.decode(str, {uint8Array: true})`
 
 Not bad for a few hours of hacking I'd say! But it's still only decoding, would have to sit down and make it encode as well at some point.
+

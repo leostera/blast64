@@ -70,7 +70,7 @@
   var decoder = new TextDecoder("utf8")
   var arr  = new ArrayBuffer(1000000000)
   var buff = new Uint8Array(arr)
-  bench_suite(function (string) {
+  bench_suite(function atob_to_utf8(string) {
     var data = atob(string)
     var len = copy(data, buff)
     return decoder.decode(new Uint8Array(arr, 0, len))

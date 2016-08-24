@@ -25,7 +25,7 @@ This is the average time from encoded string to UTF-8 encoded result.
 
 The 💓  was ran `10000000` times.
 
-The ~355kb payload was ran `1000` times.
+The [~355kb payload](https://github.com/ostera/blast64/tree/master/test/sample.js) was ran `1000` times.
 
 | Load   | atob+TextDecoder | js-base64  | fast64    | base64-js | blast64   |
 |--------|------------------|------------|-----------|-----------|-----------|

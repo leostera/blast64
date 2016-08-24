@@ -63,17 +63,18 @@
   }
 
   var decoder = new TextDecoder("utf8")
+  var arr  = new ArrayBuffer(1000000000)
+  var buff = new Uint8Array(arr)
   bench_suite(function (string) {
     var data = atob(string)
-    var arr  = new ArrayBuffer(data.length)
-    var buff = new Uint8Array(arr)
-    copy(data, buff)
-    return decoder.decode(buff)
+    var len = copy(data, buff)
+    return decoder.decode(new Uint8Array(arr, 0, len))
   })
 
   function copy(data, buffer) {
     for(var i=0; i<data.length; i++) {
       buffer[i] = data[i]
     }
+    return data.length
   }
 </script>
